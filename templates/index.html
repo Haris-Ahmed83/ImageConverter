@@ -1,0 +1,257 @@
+{% extends "base.html" %}
+{% block title %}ImageConverter — Free Online File Converter{% endblock %}
+{% block meta_desc %}Convert files online for free. 200+ formats across documents, images, video, audio and more. Fast, secure, no signup required.{% endblock %}
+{% block extra_head %}
+<script>
+var ALL_FORMATS = {{ formats_json|safe }};
+var ALL_CATEGORIES = {{ categories_json|safe }};
+</script>
+{% endblock %}
+{% block content %}
+<div class="converter-page">
+    <div class="mode-tabs">
+        <button class="mode-tab active" data-mode="convert">Convert</button>
+        <button class="mode-tab" data-mode="compress">Compress</button>
+        <button class="mode-tab" data-mode="removebg">Remove BG</button>
+    </div>
+
+    <h1 id="pageTitle">Convert your files online</h1>
+    <p class="subtitle" id="pageSubtitle">200+ formats across documents, images, video, audio, archives and more — all available right now, in your browser.</p>
+
+    <!-- Convert Mode -->
+    <div id="convertMode">
+        <div class="format-switcher">
+            <div class="format-selector source" id="srcSelector">
+                <div class="format-selector-trigger">
+                    <span class="fs-icon" style="background:#e86c00">JPG</span>
+                    <span class="fs-label">JPG</span>
+                    <span class="fs-arrow">▼</span>
+                </div>
+                <div class="fs-dropdown" id="srcDropdown"></div>
+            </div>
+            <span class="switch-arrow">→</span>
+            <div class="format-selector target" id="dstSelector">
+                <div class="format-selector-trigger">
+                    <span class="fs-icon" style="background:#5fb236">PNG</span>
+                    <span class="fs-label">PNG</span>
+                    <span class="fs-arrow">▼</span>
+                </div>
+                <div class="fs-dropdown" id="dstDropdown"></div>
+            </div>
+            <button type="button" class="swap-btn" id="swapBtn" title="Swap formats">⇄</button>
+        </div>
+    </div>
+
+    <!-- Compress Mode -->
+    <div id="compressMode" style="display:none;">
+        <div class="compress-layout">
+            <div class="compress-visual">
+                <div class="compress-icon">📦</div>
+                <h3>Compress your file</h3>
+                <p>Reduce file size while keeping quality. Drag & drop or select a file.</p>
+            </div>
+            <div class="compress-controls">
+                <div class="compress-slider-group">
+                    <label>Quality</label>
+                    <div class="slider-row">
+                        <span class="slider-label">Smaller</span>
+                        <input type="range" id="compressQuality" min="1" max="100" value="80" class="quality-slider">
+                        <span class="slider-label">Better</span>
+                    </div>
+                    <div class="slider-value" id="compressQualityValue">80%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Remove BG Mode -->
+    <div id="removeBgMode" style="display:none;">
+        <div class="compress-layout">
+            <div class="compress-visual">
+                <div class="compress-icon">✂️</div>
+                <h3>Remove Image Background</h3>
+                <p>AI-powered background removal. Upload any image and get a transparent background instantly.</p>
+            </div>
+            <div class="compress-controls">
+                <div class="compress-slider-group">
+                    <label>Output Format</label>
+                    <div style="display:flex;gap:8px;justify-content:center;margin-top:6px;">
+                        <label style="font-size:13px;font-weight:500;display:flex;align-items:center;gap:4px;cursor:pointer;">
+                            <input type="radio" name="bgFormat" value="png" checked> PNG (transparent)
+                        </label>
+                        <label style="font-size:13px;font-weight:500;display:flex;align-items:center;gap:4px;cursor:pointer;">
+                            <input type="radio" name="bgFormat" value="jpg"> JPG (white bg)
+                        </label>
+                        <label style="font-size:13px;font-weight:500;display:flex;align-items:center;gap:4px;cursor:pointer;">
+                            <input type="radio" name="bgFormat" value="webp"> WebP
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form id="converterForm" enctype="multipart/form-data">
+        <input type="hidden" id="sourceFmt" name="source_format" value="jpg">
+        <input type="hidden" id="targetFmt" name="target_format" value="png">
+        <input type="hidden" id="modeType" value="convert">
+
+        <div class="upload-area" id="uploadArea">
+            <span class="upload-icon">📁</span>
+            <h3>Select your file here to get started</h3>
+            <p>or drop your file here.</p>
+            <button type="button" class="btn btn-primary" onclick="document.getElementById('fileInput').click()">Select File</button>
+            <input type="file" id="fileInput" name="file" multiple>
+        </div>
+
+        <div class="options-bar">
+            <div class="option-group" id="qualityGroup">
+                <label for="qualitySelect">Quality</label>
+                <select id="qualitySelect" name="quality">
+                    <option value="95">Best (95)</option>
+                    <option value="85" selected>Good (85)</option>
+                    <option value="75">Medium (75)</option>
+                    <option value="50">Low (50)</option>
+                </select>
+            </div>
+            <div class="option-group" id="batchModeOption" style="display:none;">
+                <label><input type="checkbox" id="zipDownload" checked> Download as ZIP</label>
+            </div>
+        </div>
+
+        <div class="size-comparison" id="sizeComparison" style="display:none;">
+            <div class="size-bar">
+                <div class="size-item">
+                    <span class="size-label">Original</span>
+                    <span class="size-value" id="originalSize">-</span>
+                </div>
+                <div class="size-arrow">→</div>
+                <div class="size-item">
+                    <span class="size-label">Compressed</span>
+                    <span class="size-value" id="compressedSize">-</span>
+                </div>
+                <div class="size-savings" id="sizeSavings"></div>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="convertBtn" style="font-size:15px;padding:12px 36px;">Convert</button>
+    </form>
+
+    <div class="batch-queue" id="batchQueue">
+        <h3 style="font-size:14px;font-weight:600;margin-bottom:10px;text-align:left;color:var(--text-secondary);">Files to convert</h3>
+        <div id="batchFileList"></div>
+    </div>
+
+    <div class="error-msg" id="errorMsg"></div>
+    <div class="conversion-status" id="conversionStatus">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <p class="status-text" id="statusText">Starting conversion...</p>
+    </div>
+    <div class="download-area" id="downloadArea">
+        <div class="success-icon">✓</div>
+        <h3 id="downloadTitle">Conversion successful!</h3>
+        <p id="downloadFilename"></p>
+        <div class="download-actions">
+            <a class="btn btn-download" id="downloadBtn" download>Download</a>
+            <button class="btn btn-reset" id="newConvertBtn">Convert Another</button>
+        </div>
+    </div>
+</div>
+
+<div class="category-section">
+    <h2>Hundreds of formats, thousands of conversion types.</h2>
+    <p>The everyday ones, the niche ones, and a few you've probably never heard of — {{ formats|length }} formats across {{ categories|length }} categories, all available right now, in your browser.</p>
+    <div class="category-grid">
+        {% for cat in categories %}
+        <a href="/formats#{{ cat.id }}" class="category-card">
+            <div class="cat-icon">{{ cat.icon }}</div>
+            <div class="cat-name">{{ cat.name }}</div>
+            <div class="cat-count">{{ cat.count }}</div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="popular-tools">
+    <h2>Popular Conversions</h2>
+    <div class="popular-grid">
+        {% set popular = [('jpg','png'),('png','jpg'),('png','webp'),('webp','jpg'),('heic','jpg'),('pdf','jpg'),('docx','pdf'),('mp4','mp3'),('svg','png'),('jpg','pdf')] %}
+        {% for s,d in popular %}
+        {% set si = formats.get(s) %}
+        {% set di = formats.get(d) %}
+        {% if si and di %}
+        <a href="/{{ s }}-to-{{ d }}" class="popular-item">
+            <span class="pfx" style="background:{{ si.color }}">{{ si.name }}</span>
+            {{ si.name }} to {{ di.name }}
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="format-info">
+    <h2>All Formats We Support</h2>
+    <div class="all-format-list">
+        {% for cat in categories %}
+        <div class="format-category-block">
+            <h3 class="fcb-title">{{ cat.icon }} {{ cat.name }}</h3>
+            <div class="fcb-formats">
+                {% set cat_formats = [] %}
+                {% for k,v in formats.items() if v.category == cat.id %}
+                {% set _ = cat_formats.append(k) %}
+                {% endfor %}
+                {% for k,v in formats.items() if v.category == cat.id %}
+                <span class="fmt-badge" style="background:{{ v.color }}">{{ v.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+<script>
+function buildDropdown(containerId, defaultVal) {
+    var el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = '';
+    ALL_CATEGORIES.forEach(function(cat) {
+        var catDiv = document.createElement('div');
+        catDiv.className = 'fs-category';
+        catDiv.textContent = cat.icon + ' ' + cat.name;
+        el.appendChild(catDiv);
+        var formatsInCat = [];
+        for (var key in ALL_FORMATS) {
+            if (ALL_FORMATS[key].category === cat.id) {
+                formatsInCat.push(key);
+            }
+        }
+        formatsInCat.forEach(function(key) {
+            var fmt = ALL_FORMATS[key];
+            var opt = document.createElement('div');
+            opt.className = 'fs-option' + (key === defaultVal ? ' selected' : '');
+            opt.dataset.value = key;
+            opt.dataset.label = fmt.name;
+            opt.dataset.color = fmt.color;
+
+            var iconSpan = document.createElement('span');
+            iconSpan.className = 'fs-opt-icon';
+            iconSpan.style.background = fmt.color;
+            iconSpan.textContent = fmt.name.substring(0, 4);
+
+            opt.appendChild(iconSpan);
+            opt.appendChild(document.createTextNode(fmt.name + ' (' + fmt.full_name + ')'));
+
+            if (key === defaultVal) {
+                opt.classList.add('selected');
+            }
+
+            el.appendChild(opt);
+        });
+    });
+}
+
+buildDropdown('srcDropdown', 'jpg');
+buildDropdown('dstDropdown', 'png');
+</script>
+{% endblock %}

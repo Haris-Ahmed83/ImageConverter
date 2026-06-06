@@ -1,0 +1,7 @@
+venv
+uploads
+conversions
+.git
+.gitignore
+*.pyc
+__pycache__/

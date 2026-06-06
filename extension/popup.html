@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      width: 300px;
+      padding: 16px;
+      background: #f9fafb;
+      color: #111827;
+    }
+    h2 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h2 span { background: #3b82f6; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+    p { font-size: 13px; color: #6b7280; margin-bottom: 12px; }
+    .section { margin-bottom: 14px; }
+    .section h3 { font-size: 12px; font-weight: 600; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      margin-bottom: 4px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      background: white;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+    }
+    .btn:hover { border-color: #3b82f6; background: #eff6ff; }
+    .btn:last-child { margin-bottom: 0; }
+    .footer { font-size: 11px; color: #9ca3af; text-align: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid #e5e7eb; }
+    .footer a { color: #3b82f6; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <h2><span>C</span> ImageConverter</h2>
+  <p>Right-click any image → ImageConverter → choose action.</p>
+
+  <div class="section">
+    <h3>Quick Actions</h3>
+    <button class="btn" id="openSite">Open ImageConverter →</button>
+  </div>
+
+  <div class="footer">
+    <a href="https://image-converter-lake.vercel.app" target="_blank">image-converter-lake.vercel.app</a>
+  </div>
+
+  <script>
+    document.getElementById('openSite').addEventListener('click', () => {
+      chrome.tabs.create({ url: 'https://image-converter-lake.vercel.app/' });
+    });
+  </script>
+</body>
+</html>

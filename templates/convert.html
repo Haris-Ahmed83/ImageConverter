@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block title %}{{ src_info.name }} to {{ dst_info.name }} Converter — Free Online Conversion{% endblock %}
+{% block meta_desc %}Convert {{ src_info.name }} ({{ src_info.full_name }}) to {{ dst_info.name }} ({{ dst_info.full_name }}) online for free. Fast, secure, no signup required.{% endblock %}
+{% block extra_head %}
+<script>
+var ALL_FORMATS = {{ formats_json|safe }};
+var ALL_CATEGORIES = {{ categories_json|safe }};
+var DEFAULT_SRC = '{{ src_slug }}';
+var DEFAULT_DST = '{{ dst_slug }}';
+</script>
+{% endblock %}
+{% block content %}
+<div class="converter-page">
+    <h1>{{ src_info.name }} to {{ dst_info.name }} Converter</h1>
+    <p class="subtitle">Convert {{ src_info.name }} to {{ dst_info.name }} and many other format combinations. Fast, secure, no signup required.</p>
+
+    <div class="format-switcher">
+        <div class="format-selector source" id="srcSelector">
+            <div class="format-selector-trigger">
+                <span class="fs-icon" style="background:{{ src_info.color }}">{{ src_info.name[:4] }}</span>
+                <span class="fs-label">{{ src_info.name }}</span>
+                <span class="fs-arrow">▼</span>
+            </div>
+            <div class="fs-dropdown" id="srcDropdown"></div>
+            <input type="hidden" id="sourceFmt" name="source_format" value="{{ src_slug }}">
+        </div>
+
+        <span class="switch-arrow">→</span>
+
+        <div class="format-selector target" id="dstSelector">
+            <div class="format-selector-trigger">
+                <span class="fs-icon" style="background:{{ dst_info.color }}">{{ dst_info.name[:4] }}</span>
+                <span class="fs-label">{{ dst_info.name }}</span>
+                <span class="fs-arrow">▼</span>
+            </div>
+            <div class="fs-dropdown" id="dstDropdown"></div>
+            <input type="hidden" id="targetFmt" name="target_format" value="{{ dst_slug }}">
+        </div>
+
+        <button type="button" class="swap-btn" id="swapBtn" title="Swap formats">⇄</button>
+    </div>
+
+    <form id="converterForm" enctype="multipart/form-data">
+        <div class="upload-area" id="uploadArea">
+            <span class="upload-icon">📁</span>
+            <h3>Select your file here to get started</h3>
+            <p>or drop your file here.</p>
+            <button type="button" class="btn btn-primary" onclick="document.getElementById('fileInput').click()">Select File</button>
+            <input type="file" id="fileInput" name="file" accept="{% for ext in src_info.extensions %}{{ ext }}{% if not loop.last %},{% endif %}{% endfor %}" multiple>
+        </div>
+
+        <div class="options-bar">
+            <div class="option-group">
+                <label for="qualitySelect">Quality</label>
+                <select id="qualitySelect" name="quality">
+                    <option value="95">Best (95)</option>
+                    <option value="85" selected>Good (85)</option>
+                    <option value="75">Medium (75)</option>
+                    <option value="50">Low (50)</option>
+                </select>
+            </div>
+            <div class="option-group" id="batchModeOption" style="display:none;">
+                <label><input type="checkbox" id="zipDownload" checked> Download as ZIP</label>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="convertBtn" style="font-size:15px;padding:12px 36px;">Convert</button>
+    </form>
+
+    <div class="batch-queue" id="batchQueue">
+        <h3 style="font-size:14px;font-weight:600;margin-bottom:10px;text-align:left;color:var(--text-secondary);">Files to convert</h3>
+        <div id="batchFileList"></div>
+    </div>
+
+    <div class="error-msg" id="errorMsg"></div>
+    <div class="conversion-status" id="conversionStatus">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <p class="status-text" id="statusText">Starting conversion...</p>
+    </div>
+    <div class="download-area" id="downloadArea">
+        <div class="success-icon">✓</div>
+        <h3>Conversion successful!</h3>
+        <p id="downloadFilename"></p>
+        <div class="download-actions">
+            <a class="btn btn-download" id="downloadBtn" download>Download</a>
+            <button class="btn btn-reset" id="newConvertBtn">Convert Another</button>
+        </div>
+    </div>
+</div>
+
+<div class="format-info">
+    <h2>Formats involved</h2>
+    <div class="format-cards">
+        <div class="format-card">
+            <h3><span class="format-label" style="background:{{ src_info.color }}">{{ src_info.name }}</span> {{ src_info.full_name }}</h3>
+            <p>{{ src_info.description }}</p>
+        </div>
+        <div class="format-card">
+            <h3><span class="format-label" style="background:{{ dst_info.color }}">{{ dst_info.name }}</span> {{ dst_info.full_name }}</h3>
+            <p>{{ dst_info.description }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+<script>
+function buildDropdown(containerId, defaultVal) {
+    var el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = '';
+    ALL_CATEGORIES.forEach(function(cat) {
+        var catDiv = document.createElement('div');
+        catDiv.className = 'fs-category';
+        catDiv.textContent = cat.icon + ' ' + cat.name;
+        el.appendChild(catDiv);
+        for (var key in ALL_FORMATS) {
+            if (ALL_FORMATS[key].category !== cat.id) continue;
+            var fmt = ALL_FORMATS[key];
+            var opt = document.createElement('div');
+            opt.className = 'fs-option' + (key === defaultVal ? ' selected' : '');
+            opt.dataset.value = key;
+            opt.dataset.label = fmt.name;
+            opt.dataset.color = fmt.color;
+            var iconSpan = document.createElement('span');
+            iconSpan.className = 'fs-opt-icon';
+            iconSpan.style.background = fmt.color;
+            iconSpan.textContent = fmt.name.substring(0, 4);
+            opt.appendChild(iconSpan);
+            opt.appendChild(document.createTextNode(fmt.name + ' (' + fmt.full_name + ')'));
+            el.appendChild(opt);
+        }
+    });
+}
+
+buildDropdown('srcDropdown', DEFAULT_SRC);
+buildDropdown('dstDropdown', DEFAULT_DST);
+</script>
+{% endblock %}

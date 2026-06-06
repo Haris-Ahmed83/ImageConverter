@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Image Converter — Free Online Image Format Converter{% endblock %}</title>
+    <meta name="description" content="{% block meta_desc %}Convert images online for free. Support HEIC, JPG, PNG, WebP, GIF, RAW and more. Fast, secure, no signup required.{% endblock %}">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <a href="/" class="logo">
+                <span class="logo-icon">C</span>
+                <span>ImageConverter</span>
+            </a>
+            <nav class="header-nav">
+                <a href="/" {% if request.path == '/' %}class="active"{% endif %}>Tools</a>
+                <a href="/api" {% if request.path == '/api' %}class="active"{% endif %}>API</a>
+                <a href="/pricing" {% if request.path == '/pricing' %}class="active"{% endif %}>Pricing</a>
+            </nav>
+            <div class="header-actions">
+                <a href="/login" class="btn btn-outline btn-sm">Sign in</a>
+                <a href="/register" class="btn btn-primary btn-sm">Sign up</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="#">About Us</a>
+                <a href="#">Security</a>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <a href="#">Blog</a>
+                <a href="#">Status</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Imprint</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 ImageConverter — Free Online Image Tools
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

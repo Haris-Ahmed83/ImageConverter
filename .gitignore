@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel
+
+# Runtime
+*.log
+.env
+.env.local
+
+# Runtime-generated dirs
+uploads/*
+conversions/*
+!uploads/.gitkeep
+!conversions/.gitkeep
+
+# ONNX model cache
+.u2net/
+
+# OS
+Desktop.ini

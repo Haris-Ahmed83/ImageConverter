@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}All Formats — 200+ File Formats Supported{% endblock %}
+{% block meta_desc %}Complete list of all 200+ file formats supported by ImageConverter across 11 categories.{% endblock %}
+{% block content %}
+<div class="page-container">
+    <div class="page-header">
+        <h1>All Supported Formats</h1>
+        <p class="page-subtitle">{{ formats|length }} formats across {{ categories|length }} categories</p>
+    </div>
+    <div class="all-format-page">
+        {% for cat in categories %}
+        <div class="format-category-block" id="{{ cat.id }}">
+            <div class="fcb-header">
+                <span class="fcb-icon">{{ cat.icon }}</span>
+                <h2>{{ cat.name }}</h2>
+                <span class="fcb-count">{{ cat.count }} formats</span>
+            </div>
+            <div class="fcb-formats">
+                {% for k, v in formats.items() if v.category == cat.id %}
+                <div class="fmt-card">
+                    <div class="fmt-card-icon" style="background:{{ v.color }}">{{ v.name[:3] }}</div>
+                    <div class="fmt-card-info">
+                        <div class="fmt-card-name">{{ v.name }}</div>
+                        <div class="fmt-card-full">{{ v.full_name }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
