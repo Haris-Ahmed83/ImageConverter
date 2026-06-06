@@ -1,63 +1,75 @@
 {% extends "base.html" %}
-{% block title %}API — Image Converter API Documentation{% endblock %}
-{% block meta_desc %}Use our free REST API to convert, compress, and remove backgrounds from images programmatically.{% endblock %}
+{% block title %}API — ImageConverter API Documentation{% endblock %}
+{% block meta_desc %}Use our free REST API to convert, compress, and remove backgrounds from files programmatically.{% endblock %}
 {% block content %}
-<div class="page-container">
-    <div class="page-header">
-        <h1>API Documentation</h1>
-        <p class="page-subtitle">Convert images programmatically with our simple REST API</p>
-    </div>
-    <div class="page-content">
-        <h2>Convert Image</h2>
-        <div class="endpoint">
-            <span class="method post">POST</span>
-            <code>/convert</code>
+<section class="api-section">
+    <div class="page-container">
+        <div class="page-header">
+            <h1>API Documentation</h1>
+            <p class="page-subtitle">Integrate file conversion into your apps with our simple REST API</p>
         </div>
-        <table>
-            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-            <tr><td><code>file</code></td><td>File</td><td>The image file to convert</td></tr>
-            <tr><td><code>target_format</code></td><td>String</td><td>Target format: jpg, png, webp, gif, bmp, tiff, ico, avif</td></tr>
-            <tr><td><code>quality</code></td><td>Integer</td><td>Quality (1–100, default 85)</td></tr>
-        </table>
+        <div class="api-content">
+            <div class="api-card">
+                <h2>Convert File</h2>
+                <div class="endpoint-label">
+                    <span class="method-post">POST</span>
+                    <code>/convert</code>
+                </div>
+                <table>
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td><code>file</code></td><td>File</td><td>The file to convert</td></tr>
+                    <tr><td><code>target_format</code></td><td>String</td><td>Target format (e.g., jpg, png, pdf, mp4)</td></tr>
+                    <tr><td><code>quality</code></td><td>Integer</td><td>Quality 1–100 (default 85)</td></tr>
+                </table>
+            </div>
 
-        <h2>Remove Background</h2>
-        <div class="endpoint">
-            <span class="method post">POST</span>
-            <code>/remove-bg</code>
-        </div>
-        <table>
-            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-            <tr><td><code>file</code></td><td>File</td><td>The image file</td></tr>
-            <tr><td><code>format</code></td><td>String</td><td>Output format: png (default), jpg, webp</td></tr>
-        </table>
+            <div class="api-card">
+                <h2>Remove Background</h2>
+                <div class="endpoint-label">
+                    <span class="method-post">POST</span>
+                    <code>/remove-bg</code>
+                </div>
+                <table>
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td><code>file</code></td><td>File</td><td>The image file</td></tr>
+                    <tr><td><code>format</code></td><td>String</td><td>Output format: png, jpg, webp</td></tr>
+                </table>
+            </div>
 
-        <h2>Compress Image</h2>
-        <div class="endpoint">
-            <span class="method post">POST</span>
-            <code>/compress</code>
-        </div>
-        <table>
-            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-            <tr><td><code>file</code></td><td>File</td><td>The image file to compress</td></tr>
-            <tr><td><code>quality</code></td><td>Integer</td><td>Compression quality (1–100)</td></tr>
-        </table>
+            <div class="api-card">
+                <h2>Compress File</h2>
+                <div class="endpoint-label">
+                    <span class="method-post">POST</span>
+                    <code>/compress</code>
+                </div>
+                <table>
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td><code>file</code></td><td>File</td><td>The file to compress</td></tr>
+                    <tr><td><code>quality</code></td><td>Integer</td><td>Compression quality 1–100</td></tr>
+                </table>
+            </div>
 
-        <h2>Batch Convert</h2>
-        <div class="endpoint">
-            <span class="method post">POST</span>
-            <code>/convert/batch</code>
-        </div>
-        <table>
-            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-            <tr><td><code>files</code></td><td>File[]</td><td>Multiple image files</td></tr>
-            <tr><td><code>target_format</code></td><td>String</td><td>Target format for all files</td></tr>
-        </table>
+            <div class="api-card">
+                <h2>Batch Convert</h2>
+                <div class="endpoint-label">
+                    <span class="method-post">POST</span>
+                    <code>/convert/batch</code>
+                </div>
+                <table>
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr><td><code>files</code></td><td>File[]</td><td>Multiple files</td></tr>
+                    <tr><td><code>target_format</code></td><td>String</td><td>Target format for all files</td></tr>
+                </table>
+            </div>
 
-        <h3>cURL Example</h3>
-        <pre><code>curl -X POST https://image-converter-lake.vercel.app/convert \
-  -F "file=@image.heic" \
+            <div class="api-card code-card">
+                <h2>Example</h2>
+                <pre><code>curl -X POST https://image-converter-lake.vercel.app/convert \
+  -F "file=@document.pdf" \
   -F "target_format=jpg" \
   -F "quality=90"</code></pre>
+            </div>
+        </div>
     </div>
-</div>
+</section>
 {% endblock %}
