@@ -81,7 +81,7 @@ brew install ffmpeg libreoffice ghostscript imagemagick
 ├── api/
 │   └── index.py              # Vercel serverless entrypoint
 ├── utils/
-│   ├── formatter.py          # 212 format definitions & metadata
+│   ├── formats.py            # 212 format definitions & metadata
 │   ├── converter.py          # Conversion dispatcher
 │   ├── bgremover.py          # ONNX background removal
 │   └── engines/
