@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Image Converter — Free Online Image Format Converter{% endblock %}</title>
-    <meta name="description" content="{% block meta_desc %}Convert images online for free. Support HEIC, JPG, PNG, WebP, GIF, RAW and more. Fast, secure, no signup required.{% endblock %}">
+    <title>{% block title %}ImageConverter — Free Online File Converter{% endblock %}</title>
+    <meta name="description" content="{% block meta_desc %}Convert files online for free. 200+ formats across documents, images, video, audio and more. Fast, secure, no signup required.{% endblock %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
     {% block extra_head %}{% endblock %}
@@ -14,12 +17,10 @@
         <div class="header-inner">
             <a href="/" class="logo">
                 <span class="logo-icon">C</span>
-                <span>ImageConverter</span>
+                <span class="logo-text">IC</span>
             </a>
-            <nav class="header-nav">
-            </nav>
             <div class="header-actions">
-                <a href="/login" class="btn btn-outline btn-sm">Sign in</a>
+                <a href="/login" class="btn btn-ghost btn-sm">Sign in</a>
                 <a href="/register" class="btn btn-primary btn-sm">Sign up</a>
             </div>
         </div>
@@ -31,29 +32,31 @@
 
     <footer>
         <div class="footer-inner">
-            <div class="footer-col">
-                <h4>Company</h4>
-                <a href="#">About Us</a>
-                <a href="#">Security</a>
+            <div class="footer-brand">
+                <span class="logo-icon" style="width:28px;height:28px;font-size:13px;">C</span>
+                <span class="footer-tagline">Convert any file. Free.</span>
             </div>
-            <div class="footer-col">
-                <h4>Resources</h4>
-                <a href="#">Blog</a>
-                <a href="#">Status</a>
-            </div>
-            <div class="footer-col">
-                <h4>Legal</h4>
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-                <a href="#">Imprint</a>
-            </div>
-            <div class="footer-col">
-                <h4>Contact</h4>
-                <a href="#">Contact Us</a>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="#">About</a>
+                    <a href="#">Security</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <a href="#">Blog</a>
+                    <a href="#">Status</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <a href="#">Contact</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; 2026 ImageConverter — Free Online Image Tools
+            &copy; 2026 ImageConverter
         </div>
     </footer>
 

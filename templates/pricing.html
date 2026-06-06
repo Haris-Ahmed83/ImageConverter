@@ -1,29 +1,106 @@
 {% extends "base.html" %}
-{% block title %}Pricing — Free Image Converter{% endblock %}
-{% block meta_desc %}100% free image conversion tools. No hidden fees, no signup required.{% endblock %}
+{% block title %}Pricing — ImageConverter{% endblock %}
+{% block meta_desc %}Simple, transparent pricing. Start free, upgrade when you need more.{% endblock %}
 {% block content %}
-<div class="page-container">
-    <div class="page-header">
-        <h1>Pricing</h1>
-        <p class="page-subtitle">100% free — no signup, no hidden charges</p>
-    </div>
-    <div class="pricing-grid">
-        <div class="pricing-card">
-            <div class="pricing-badge">Free</div>
-            <div class="pricing-price">$0</div>
-            <p class="pricing-desc">For everyone</p>
-            <hr>
-            <ul class="pricing-features">
-                <li>✅ All image formats</li>
-                <li>✅ Batch conversion</li>
-                <li>✅ Compression</li>
-                <li>✅ AI Background removal</li>
-                <li>✅ No file size limit</li>
-                <li>✅ No signup required</li>
-                <li>✅ Unlimited conversions</li>
-            </ul>
-            <a href="/" class="btn btn-primary pricing-btn">Get Started</a>
+<div class="pricing-section">
+    <div class="pricing-container">
+        <div class="pricing-header">
+            <h1 class="pricing-h1">Simple, transparent pricing</h1>
+            <p class="pricing-subtitle">Start for free, upgrade when you need more.</p>
         </div>
+
+        <div class="pricing-grid">
+            <!-- Free Plan -->
+            <div class="pricing-card">
+                <div class="pricing-plan">Free</div>
+                <div class="pricing-amount">
+                    <span class="pricing-price">$0</span>
+                </div>
+                <p class="pricing-desc">For occasional conversions</p>
+                <hr class="pricing-divider">
+                <ul class="pricing-features">
+                    <li>25 conversions per day</li>
+                    <li>1 GB file size limit</li>
+                    <li>All 200+ formats</li>
+                    <li>1 concurrent conversion</li>
+                    <li>Basic support</li>
+                </ul>
+                <a href="/" class="btn btn-outline pricing-cta">Get started</a>
+            </div>
+
+            <!-- Pro Plan (Featured) -->
+            <div class="pricing-card featured">
+                <div class="pricing-popular">Most popular</div>
+                <div class="pricing-plan">Pro</div>
+                <div class="pricing-amount">
+                    <span class="pricing-price">$9</span>
+                    <span class="pricing-period">/month</span>
+                </div>
+                <p class="pricing-desc">For professionals and teams</p>
+                <hr class="pricing-divider">
+                <ul class="pricing-features">
+                    <li>500 conversions per day</li>
+                    <li>10 GB file size limit</li>
+                    <li>All 200+ formats</li>
+                    <li>5 concurrent conversions</li>
+                    <li>Priority support</li>
+                    <li>No ads</li>
+                </ul>
+                <a href="/" class="btn btn-primary pricing-cta">Get started</a>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="pricing-card">
+                <div class="pricing-plan">Enterprise</div>
+                <div class="pricing-amount">
+                    <span class="pricing-price">$49</span>
+                    <span class="pricing-period">/month</span>
+                </div>
+                <p class="pricing-desc">For high-volume businesses</p>
+                <hr class="pricing-divider">
+                <ul class="pricing-features">
+                    <li>Unlimited conversions</li>
+                    <li>50 GB file size limit</li>
+                    <li>All 200+ formats</li>
+                    <li>Unlimited concurrent</li>
+                    <li>Dedicated support</li>
+                    <li>No ads</li>
+                    <li>API access</li>
+                    <li>Custom integrations</li>
+                </ul>
+                <a href="/" class="btn btn-outline pricing-cta">Get started</a>
+            </div>
+        </div>
+
+        <div class="pricing-faq">
+            <h2>Frequently asked questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>Is there a free trial?</h4>
+                    <p>Yes, the Free plan is available forever with basic features. Upgrade anytime for more.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I cancel anytime?</h4>
+                    <p>Yes, you can cancel your subscription at any time. No hidden fees.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What payment methods do you accept?</h4>
+                    <p>We accept all major credit cards, PayPal, and bank transfers for enterprise plans.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Are my files secure?</h4>
+                    <p>All files are processed securely and automatically deleted after conversion. ISO 27001 certified.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pricing-cta-section">
+    <div class="pricing-container">
+        <h2>Still have questions?</h2>
+        <p>Contact our sales team for a personalized demo and custom pricing.</p>
+        <a href="#" class="btn btn-primary pricing-cta-btn">Contact sales</a>
     </div>
 </div>
 {% endblock %}
