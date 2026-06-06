@@ -126,7 +126,7 @@ function buildDropdown(containerId, defaultVal) {
             iconSpan.style.background = fmt.color;
             iconSpan.textContent = fmt.name.substring(0, 4);
             opt.appendChild(iconSpan);
-            opt.appendChild(document.createTextNode(fmt.name + ' (' + fmt.full_name + ')'));
+            opt.appendChild(document.createTextNode(fmt.name));
             el.appendChild(opt);
         }
     });

@@ -240,7 +240,7 @@ function buildDropdown(containerId, defaultVal) {
             iconSpan.textContent = fmt.name.substring(0, 4);
 
             opt.appendChild(iconSpan);
-            opt.appendChild(document.createTextNode(fmt.name + ' (' + fmt.full_name + ')'));
+            opt.appendChild(document.createTextNode(fmt.name));
 
             if (key === defaultVal) {
                 opt.classList.add('selected');
